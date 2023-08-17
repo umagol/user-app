@@ -18,7 +18,6 @@ const UserDetailsPage: React.FC = () =>
 
   return (
     <>
-      <Header page="logout"/>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 py-8">
         <div className="bg-white p-8 rounded-lg shadow-lg w-80 text-center">
           <div className="relative mx-auto mb-4 h-20 w-20">
@@ -37,7 +36,6 @@ const UserDetailsPage: React.FC = () =>
           </p>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

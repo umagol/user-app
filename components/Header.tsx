@@ -1,12 +1,13 @@
 import React from "react";
 import Link from "next/link";
-import '@/styles/globals.css'
 import Image from "next/image";
 import { faUser, faBriefcase, faAddressBook } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRouter } from "next/router";
 
 export default function Header ( props: any ): any
-{
+{  
+      const router = useRouter();
       return (
             <>
                   <header className="bg-white-500 py-4">
@@ -32,15 +33,15 @@ export default function Header ( props: any ): any
                                                 Contact</a>
                                     </Link>
                               </nav>
-                              { props.page == "login"  ? (
+                              { router.asPath.split("/")[1] == "login" || router.query.username ? null  : (
                                     <Link href="/login" legacyBehavior>
                                     <button className="bg-cyan-500 text-black-500 px-4 py-2 rounded-lg hover:bg-cyan-600 focus:outline-none focus:ring focus:ring-cyan-600">
                                           Login
                                     </button>
                               </Link>
-                              ) : null}
+                              ) }
 
-                              {props.page == "logout" ?(
+                              {router.query.username ? (
                                     <Link href="/login" legacyBehavior>
                                           <button className="bg-cyan-500 text-black-500 px-4 py-2 rounded-lg hover:bg-cyan-600 focus:outline-none focus:ring focus:ring-cyan-600">
                                                 Logout
