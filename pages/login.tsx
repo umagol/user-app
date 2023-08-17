@@ -3,16 +3,18 @@ import Image from "next/image";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import { useForm, Controller } from 'react-hook-form';
-
+import { useRouter } from 'next/router';
 // components
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 export default function Login ()
 {
       const { control, handleSubmit, formState: { errors } }: any = useForm();
+      const router = useRouter();
       const onSubmit = ( data: any ) =>
       {
             console.log( data );
+            router.push(`/${data.username}`);
       };
       return (
             <>
