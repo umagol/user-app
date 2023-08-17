@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Header ( props: any ): any
 {
-      console.log( props )
       return (
             <>
                   <header className="bg-white-500 py-4">
@@ -33,20 +32,21 @@ export default function Header ( props: any ): any
                                                 Contact</a>
                                     </Link>
                               </nav>
-                              { props.page == "login"  ? null : (
+                              { props.page == "login"  ? (
                                     <Link href="/login" legacyBehavior>
-                                          <button className="bg-cyan-500 text-black-500 px-4 py-2 rounded-lg hover:bg-cyan-600 focus:outline-none focus:ring focus:ring-cyan-600">
-                                                Login
-                                          </button>
-                                    </Link>
-                              )}
-                              {props.page != "logout" ? null : (
+                                    <button className="bg-cyan-500 text-black-500 px-4 py-2 rounded-lg hover:bg-cyan-600 focus:outline-none focus:ring focus:ring-cyan-600">
+                                          Login
+                                    </button>
+                              </Link>
+                              ) : null}
+
+                              {props.page == "logout" ?(
                                     <Link href="/login" legacyBehavior>
                                           <button className="bg-cyan-500 text-black-500 px-4 py-2 rounded-lg hover:bg-cyan-600 focus:outline-none focus:ring focus:ring-cyan-600">
                                                 Logout
                                           </button>
                                     </Link>
-                              )}
+                              ): null}
                         </div>
                   </header>
             </>

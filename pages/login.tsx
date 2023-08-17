@@ -13,12 +13,11 @@ export default function Login ()
       const router = useRouter();
       const onSubmit = ( data: any ) =>
       {
-            console.log( data );
             router.push(`/${data.username}`);
       };
       return (
             <>
-                  <Header page={"login"}/>
+                  <Header/>
                   <div className="flex justify-center items-center min-h-screen bg-cover bg-center bg-gradient-to-b from-blue-500 to-blue-800"
                                     style={{ backgroundImage: `url('images/bg.jpg')` }}>
                         <div className="bg-white shadow-lg rounded-lg p-8 w-80">
