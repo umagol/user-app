@@ -100,7 +100,7 @@ export default function Login ()
                                           Sign In
                                     </button>
                                     <div className="text-center mt-4">
-                                          <a href="#" className="text-blue-500 hover:underline">
+                                          <a href="#" className="text-blue-500 hover:underline text-sm">
                                                 Forgot Password?
                                           </a>
                                     </div>
