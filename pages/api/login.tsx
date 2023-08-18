@@ -1,9 +1,9 @@
-import { connectToDatabase } from '@/utils/dbConnect';
-import UserModel from '@/utils/models/User';
-import { validate } from '@/utils/middleware/validator';
+import { connectToDatabase } from '@/api/utils/dbConnect';
+import UserModel from '@/api/models/User';
+import { validate } from '@/api/middleware/validator';
 import { body, validationResult, check } from "express-validator";
 import bcrypt from "bcrypt";
-import { ErrorResponse, successResponseWithData, validationErrorWithData, unauthorizedResponse } from "@/utils/apiResponse";
+import { ErrorResponse, successResponseWithData, validationErrorWithData} from "@/api/utils/apiResponse";
 export default async function handler ( req: any, res: any )
 {
       const db = await connectToDatabase(); // connect DB
@@ -31,17 +31,16 @@ export default async function handler ( req: any, res: any )
                                     };
                                     return successResponseWithData( res, "Login Success.", userData );
                               } else {
-                                    return unauthorizedResponse( res, "UserName or Password wrong." );
+                                    return validationErrorWithData( res, "Username or Password wrong.",{} );
                               }
                         } else {
-                              return unauthorizedResponse( res, "Account is not verified. Please verified your account." );
+                              return validationErrorWithData( res, "Account is not verified. Please verified" ,{});
                         }
                   } else {
-                        return unauthorizedResponse( res, "UserName or Password wrong." );
+                        return validationErrorWithData( res, "Username or Password wrong.",{} );
                   }
             } catch ( error ) {
-                  console.log( error )
-                  res.status( 500 ).json( { error: 'Internal Server Error' } );
+                  return ErrorResponse( res, "Internal Server Error" );
             }
       } 
 }

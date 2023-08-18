@@ -1,7 +1,7 @@
-import { connectToDatabase } from '@/utils/dbConnect';
-import UserModel from '@/utils/models/User';
+import { connectToDatabase } from '@/api/utils/dbConnect';
+import UserModel from '@/api/models/User';
 import bcrypt from "bcrypt";
-import { ErrorResponse, successResponseWithData, unauthorizedResponse } from "@/utils/apiResponse";
+import { ErrorResponse, successResponseWithData, unauthorizedResponse } from "@/api/utils/apiResponse";
 export default async function handler ( req: any, res: any )
 {
       const db = await connectToDatabase(); // connect DB
