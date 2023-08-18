@@ -9,7 +9,7 @@ const API_URL = process.env.API_URL;
  */
 export const MakeGetRequest = ( endpoint: any ) =>
 {
-      return fetch( endpoint, {
+      return fetch( '/api' + endpoint, {
             method: 'GET',
             headers: {
                   'Content-Type': 'application/json',

@@ -1,22 +1,28 @@
 
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import '@/styles/globals.css'
-// components
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import { MakeGetRequest } from '@/services/API';
+import Error from 'next/error'
 
 const UserDetailsPage: React.FC = () =>
 {
+  const [userDetails, setUserDetails]: any = useState( {} );
   const router = useRouter();
   const { username } = router.query; // Access the dynamic parameter
-  useEffect( () =>
-  {
-    // Make a request to fetch data here
+  
+  useEffect( () =>{
+    getUserDetails();
   }, [ username ] );
 
-  return (
+  const getUserDetails = async() => {
+    if(username){
+      const response: any = await MakeGetRequest('/user'+"?username="+username);
+      setUserDetails(response.data);
+    }
+  }
+  return userDetails ? (
     <>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 py-8">
         <div className="bg-white p-8 rounded-lg shadow-lg w-80 text-center">
@@ -28,15 +34,16 @@ const UserDetailsPage: React.FC = () =>
               layout="fill"
             />
           </div>
-          <h1 className="text-2xl font-semibold">John Doe</h1>
-          <p className="text-gray-600 mb-4">@johndoe</p>
+          <h1 className="text-2xl font-semibold">{userDetails?.fullName}</h1>
+          <p className="text-gray-600 mb-4">@{userDetails?.username}</p>
           <p className="text-gray-800">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac nulla vitae velit
-            tincidunt fringilla a a purus. Vivamus id massa aliquet, tempus justo nec, dictum mauris.
+          {userDetails?.about}
           </p>
         </div>
       </div>
     </>
+  ):(
+    <Error statusCode={404} />
   );
 };
 export default UserDetailsPage;

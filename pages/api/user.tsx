@@ -1,7 +1,7 @@
 import { connectToDatabase } from '@/api/utils/dbConnect';
 import UserModel from '@/api/models/User';
 import bcrypt from "bcrypt";
-import { ErrorResponse, successResponseWithData, unauthorizedResponse } from "@/api/utils/apiResponse";
+import { ErrorResponse, successResponseWithData, notFoundResponse } from "@/api/utils/apiResponse";
 export default async function handler ( req: any, res: any )
 {
       const db = await connectToDatabase(); // connect DB
@@ -26,5 +26,18 @@ export default async function handler ( req: any, res: any )
                   console.log( error )
                   res.status( 500 ).json( { error: 'Internal Server Error' } );
             }
+      }else if ( req.method === 'GET' ) {
+            try {
+                  const { username } = req.query;
+                  const user: any = await UserModel.findOne( { username: username } );
+                  if(user){
+                        return successResponseWithData(res,"Fetched User.", user);                   
+                  }else{
+                        return notFoundResponse(res,"User not found.");
+                  }
+            } catch ( error ) {
+                  console.log( error )
+                  res.status( 500 ).json( { error: 'Internal Server Error' } );
+            }     
       }
 }
