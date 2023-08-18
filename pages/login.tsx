@@ -4,13 +4,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import { useForm, Controller } from 'react-hook-form';
 import { useRouter } from 'next/router';
+
+import { MakePostRequest } from "@/services/API";
 function Login (props: any)
 {
+      const [APIError, setError] = React.useState('');
       const { control, handleSubmit, formState: { errors } }: any = useForm();
       const router = useRouter();
-      const onSubmit = ( data: any ) =>
+      const onSubmit = async ( data: any ) =>
       {
-            router.push(`/${data.username}`);
+            setError('');
+            const response: any = await MakePostRequest('/login', data);
+            if(response.status){
+                  router.push(`/${data.username}`);
+            }else{
+                  setError(response.message)
+            }
       };
       return (
             <>
@@ -21,6 +30,7 @@ function Login (props: any)
                                     <Image src="/images/logo.png" alt="logo" width={ 30 } height={ 30 } />
                               </div>
                               <h2 className=" text-center text-2xl font-semibold mb-4">Login</h2>
+                              { APIError && <p className="text-center text-red-500 text-sm">{ APIError }</p> }
                               <form onSubmit={ handleSubmit( onSubmit ) }>
                                     <div className="mb-4">
                                           <div className="relative">
