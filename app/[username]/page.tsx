@@ -1,16 +1,16 @@
-
-import { useRouter } from 'next/router';
+'use client'
+import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import '@/styles/globals.css'
-import { MakeGetRequest } from '@/services/API';
+import { MakeGetRequest } from '@/app/services/API';
 import Error from 'next/error'
 
 const UserDetailsPage: React.FC = () =>
 {
   const [userDetails, setUserDetails]: any = useState( {} );
   const router = useRouter();
-  const { username } = router.query; // Access the dynamic parameter
+  let username  = usePathname(); // Access the dynamic parameter
   
   useEffect( () =>{
     getUserDetails();
@@ -18,7 +18,11 @@ const UserDetailsPage: React.FC = () =>
 
   const getUserDetails = async() => {
     if(username){
+      username = username.replace("/","");
       const response: any = await MakeGetRequest('/user'+"?username="+username);
+      if(response.status = 0){
+        throw response.message;
+      }
       setUserDetails(response.data);
     }
   }

@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema( {
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },
 } );
-console.log(mongoose.models)
 const UserModel =  mongoose.models.users || mongoose.model( 'users', userSchema );
 
 export default UserModel;

@@ -1,11 +1,12 @@
+'use client'
 import React from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import { useForm, Controller } from 'react-hook-form';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
-import { MakePostRequest } from "@/services/API";
+import { MakePostRequest } from "@/app/services/API";
 function Login (props: any)
 {
       const [APIError, setError] = React.useState('');
