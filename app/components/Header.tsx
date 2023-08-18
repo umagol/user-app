@@ -1,12 +1,14 @@
+'use client'
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { faUser, faBriefcase, faAddressBook } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRouter } from "next/router";
+import { useRouter, usePathname } from 'next/navigation'
 
 export default function Header ( props: any ): any
 {  
+      const pathname = usePathname();
       const router = useRouter();
       return (
             <>
@@ -19,34 +21,30 @@ export default function Header ( props: any ): any
                               <nav className="space-x-6">
                                     <Link href="/" legacyBehavior>
                                           <a className="text-black hover:text-cyan-600">
-                                          <FontAwesomeIcon icon={ faUser } className="text-gray-400 mr-2  hover:text-cyan-600" />
+                                          <FontAwesomeIcon icon={ faUser } className="text-gray-400 mr-2  hover:text-cyan-600" width={ 20 } height={ 20 } />
                                           Home</a>
                                     </Link>
                                     <Link href="/about" legacyBehavior>
                                           <a className="text-black hover:text-cyan-600">
-                                          <FontAwesomeIcon icon={ faBriefcase } className="text-gray-400 mr-2  hover:text-cyan-600" />                                    
+                                          <FontAwesomeIcon icon={ faBriefcase } className="text-gray-400 mr-2  hover:text-cyan-600" width={ 20 } height={ 20 } />                                    
                                                 Who we Are ?</a>
                                     </Link>
                                     <Link href="/contact" legacyBehavior>
                                           <a className="text-black hover:text-cyan-600">
-                                          <FontAwesomeIcon icon={ faAddressBook } className="text-gray-400 mr-2  hover:text-cyan-600" />
+                                          <FontAwesomeIcon icon={ faAddressBook } className="text-gray-400 mr-2  hover:text-cyan-600" width={ 20 } height={ 20 } />
                                                 Contact</a>
                                     </Link>
                               </nav>
-                              { router.asPath.split("/")[1] == "login" || router.query.username ? null  : (
-                                    <Link href="/login" legacyBehavior>
-                                    <button className="bg-cyan-500 text-black-500 px-4 py-2 rounded-lg hover:bg-cyan-600 focus:outline-none focus:ring focus:ring-cyan-600">
+                              { pathname == "/" ? (
+                                    <button className="bg-cyan-500 text-black-500 px-4 py-2 rounded-lg hover:bg-cyan-600 focus:outline-none focus:ring focus:ring-cyan-600" onClick={()=> router.push(`/login`)}>
                                           Login
                                     </button>
-                              </Link>
-                              ) }
+                              ): null }
 
-                              {router.query.username ? (
-                                    <Link href="/login" legacyBehavior>
-                                          <button className="bg-cyan-500 text-black-500 px-4 py-2 rounded-lg hover:bg-cyan-600 focus:outline-none focus:ring focus:ring-cyan-600">
-                                                Logout
-                                          </button>
-                                    </Link>
+                              {pathname != "/login" && pathname != "/" ? (
+                                    <button className="bg-cyan-500 text-black-500 px-4 py-2 rounded-lg hover:bg-cyan-600 focus:outline-none focus:ring focus:ring-cyan-600" onClick={()=> router.push(`/`)}>
+                                          Logout
+                                    </button>
                               ): null}
                         </div>
                   </header>
