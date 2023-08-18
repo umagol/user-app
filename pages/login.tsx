@@ -3,20 +3,17 @@ import Image from "next/image";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import { useForm, Controller } from 'react-hook-form';
-
-// components
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-export default function Login ()
+import { useRouter } from 'next/router';
+function Login (props: any)
 {
       const { control, handleSubmit, formState: { errors } }: any = useForm();
+      const router = useRouter();
       const onSubmit = ( data: any ) =>
       {
-            console.log( data );
+            router.push(`/${data.username}`);
       };
       return (
             <>
-                  <Header page={"login"}/>
                   <div className="flex justify-center items-center min-h-screen bg-cover bg-center bg-gradient-to-b from-blue-500 to-blue-800"
                                     style={{ backgroundImage: `url('images/bg.jpg')` }}>
                         <div className="bg-white shadow-lg rounded-lg p-8 w-80">
@@ -100,14 +97,15 @@ export default function Login ()
                                           Sign In
                                     </button>
                                     <div className="text-center mt-4">
-                                          <a href="#" className="text-blue-500 hover:underline">
+                                          <a href="#" className="text-blue-500 hover:underline text-sm">
                                                 Forgot Password?
                                           </a>
                                     </div>
                               </form>
                         </div>
                   </div>
-                  <Footer />
             </>
       )
 }
+Login.pageTitle = "My App | Login";
+export default  Login;

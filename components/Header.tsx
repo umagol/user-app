@@ -1,38 +1,55 @@
 import React from "react";
 import Link from "next/link";
-import '@/styles/globals.css'
 import Image from "next/image";
+import { faUser, faBriefcase, faAddressBook } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRouter } from "next/router";
 
 export default function Header ( props: any ): any
-{
-      console.log(props)
+{  
+      const router = useRouter();
       return (
             <>
-                  <nav className="w-full bg-white-800 shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
-                        <div className="justify-between px-4 lg:max-w-7xl md:items-center md:flex md:px-8">
-                              <Link href="/" legacyBehavior>
-                              <div className="flex items-center">
-                                    <Image src="/images/logo.png" alt="logo" width={ 30 } height={ 30 } />
-                                    <div className="mr-3 ml-3 flex grid-cols-1 items-center justify-between py-3 md:py-5 md:block">
-                                          <Link href="/login" legacyBehavior>
-                                                <h2 className="text-2xl text-black font-bold">User App</h2>
-                                          </Link>
-                                    </div>
+                  <header className="bg-white-500 py-4">
+                        <div className="container mx-auto flex justify-between items-center">
+                              <div className="flex items-center space-x-4">
+                                          <Image src="/images/logo.png" className="w-8 h-8" alt="logo" width={ 30 } height={ 30 } />
+                                          <h1 className="text-black text-lg font-semibold">User App</h1>
                               </div>
+                              <nav className="space-x-6">
+                                    <Link href="/" legacyBehavior>
+                                          <a className="text-black hover:text-cyan-600">
+                                          <FontAwesomeIcon icon={ faUser } className="text-gray-400 mr-2  hover:text-cyan-600" />
+                                          Home</a>
+                                    </Link>
+                                    <Link href="/about" legacyBehavior>
+                                          <a className="text-black hover:text-cyan-600">
+                                          <FontAwesomeIcon icon={ faBriefcase } className="text-gray-400 mr-2  hover:text-cyan-600" />                                    
+                                                Who we Are ?</a>
+                                    </Link>
+                                    <Link href="/contact" legacyBehavior>
+                                          <a className="text-black hover:text-cyan-600">
+                                          <FontAwesomeIcon icon={ faAddressBook } className="text-gray-400 mr-2  hover:text-cyan-600" />
+                                                Contact</a>
+                                    </Link>
+                              </nav>
+                              { router.asPath.split("/")[1] == "login" || router.query.username ? null  : (
+                                    <Link href="/login" legacyBehavior>
+                                    <button className="bg-cyan-500 text-black-500 px-4 py-2 rounded-lg hover:bg-cyan-600 focus:outline-none focus:ring focus:ring-cyan-600">
+                                          Login
+                                    </button>
                               </Link>
-                              { props.page=="login" ? null : (
-                                    <div className="flex items-center space-x-4">
-                                          <div className="flex-1">
-                                                <Link href="/login" legacyBehavior>
-                                                      <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
-                                                            Login
-                                                      </button>
-                                                </Link>
-                                          </div>
-                                    </div>)
-                              }
+                              ) }
+
+                              {router.query.username ? (
+                                    <Link href="/login" legacyBehavior>
+                                          <button className="bg-cyan-500 text-black-500 px-4 py-2 rounded-lg hover:bg-cyan-600 focus:outline-none focus:ring focus:ring-cyan-600">
+                                                Logout
+                                          </button>
+                                    </Link>
+                              ): null}
                         </div>
-                  </nav>
+                  </header>
             </>
       );
 }
